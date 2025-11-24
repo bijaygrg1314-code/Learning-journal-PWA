@@ -7,33 +7,90 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <nav class="navbar">
-      <a href="index.html">Home</a>
-      <a href="journal.html" class="active">Journal</a>
-      <a href="projects.html">Projects</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
+  <header></header>
 
-<main>
-  <section class="journal-entry">
-    <h2>Week 2 Reflection</h2>
+  <main>
+    
+    <!-- Collapsible reflections -->
+    <section class="journal-entry">
+      <button class="collapsible">Week 2 Reflection</button>
+      <div class="content">
+        <p><strong>1. How did you approach mobile-first design?</strong><br>
+        I began with a simple one-column layout optimized for small screens, focusing on readability and touch-friendly spacing. My goal was to ensure that content felt natural and uncluttered on mobile devices. Once the base layout was solid, I introduced media queries to adapt the design for tablets and desktops — adjusting padding, font sizes, and layout flow. This progressive enhancement strategy helped me build a responsive experience that feels intuitive across all screen sizes.</p>
 
-    <p><strong>1. How did you approach mobile-first design?</strong><br>
-    I started with a simple one-column layout for small screens, making sure text and buttons were easy to read. Then I added media queries so the design could change for tablets and desktops. This way the site looks good on any device and is easy to use.</p>
+        <p><strong>2. What was the most useful HTML or CSS concept you applied this week?</strong><br>
+        Flexbox was a game-changer. It allowed me to align and distribute elements with precision, especially in the navbar and project cards. I also refined my use of margins and padding to create visual breathing room between sections. These small adjustments made a big difference in the overall polish of the site. I started thinking more like a designer — not just placing elements, but shaping the user’s experience.</p>
 
-    <p><strong>2. What was the most useful HTML or CSS concept you applied this week?</strong><br>
-    Flexbox was the most useful because it helped me place items neatly and keep them responsive. I also learned how to use margins and padding better to give space between elements. These small changes made the page look cleaner and more professional.</p>
+        <p><strong>3. What part of HTML or CSS did you find most challenging or confusing?</strong><br>
+        Media queries were tricky at first. I struggled to understand which styles were active at different breakpoints, especially when multiple rules overlapped. I had to test my site on various screen sizes and use browser dev tools to inspect which styles were being applied. Through trial and error, I learned how to structure my CSS more clearly and use min-width logic to layer styles effectively. It was frustrating at times, but I came out with a stronger grasp of responsive design.</p>
+      </div>
+    </section>
 
-    <p><strong>3. What part of HTML or CSS did you find most challenging or confusing?</strong><br>
-    Media queries were the hardest part because sometimes I was not sure which style was active. I had to test my site on different screen sizes to understand how the rules worked. It was confusing at first, but I am slowly learning how to control the layout better.</p>
-  </section>
-</main>
+    <section class="journal-entry">
+      <button class="collapsible">Week 3 Reflection</button>
+      <div class="content">
+        <p><strong>1. Which DOM selection methods did you use, and why?</strong><br>
+        This week I used both <code>getElementById()</code> and <code>querySelector()</code> to target elements in my Learning Journal PWA. I chose <code>getElementById()</code> for unique elements like the date/time display and theme toggle button because it’s fast and direct. For reusable or styled components like collapsible sections, I used <code>querySelector()</code> to select by class. This gave me flexibility to apply interactivity across multiple elements without duplicating code.</p>
 
+        <p><strong>2. What was the most challenging part about linking JavaScript with HTML?</strong><br>
+        The biggest challenge was making sure my JavaScript executed only after the DOM was fully loaded. Initially, I placed the <code>&lt;script&gt;</code> tag in the <code>&lt;head&gt;</code>, which caused errors because the elements weren’t available yet. Once I moved it to the bottom of the <code>&lt;body&gt;</code>, everything worked smoothly. I also had to debug why my collapsible buttons weren’t responding — turns out I needed to wrap the event listeners inside a loop to target each button individually.</p>
+
+        <p><strong>3. How did you test and debug your JavaScript code?</strong><br>
+        I relied heavily on <code>console.log()</code> to trace values and confirm that my event listeners were firing. I also used browser dev tools to inspect elements and check if styles were being applied correctly. Testing across different screen sizes helped me catch layout issues, especially with the theme toggle button. I refined its position and shape to avoid overlapping the navbar and make it visually appealing. Each bug taught me something new about how the DOM behaves and how to write cleaner, modular code.</p>
+      </div>
+    </section>
+
+<section class="journal-entry">
+  <button class="collapsible">Week 4 Reflection</button>
+  <div class="content">
+    <p><strong>1. Which Storage, Browser, and Third‑Party APIs did you choose, and why?</strong><br>
+    For Storage, I used <code>LocalStorage</code> because it’s simple and reliable for persisting journal entries and theme preferences across reloads. For the Browser API, I implemented the <code>Clipboard API</code> to let me copy entries quickly, and the <code>Notifications API</code> to give feedback when saving, deleting, or clearing entries. For the Third‑Party API, I integrated a <code>YouTube embed</code> to bring external learning content directly into my journal. These choices balanced ease of implementation with meaningful functionality.</p>
+
+    <p><strong>2. How did you integrate each API with DOM manipulation?</strong><br>
+    LocalStorage was tied to the journal form: when I save an entry, it’s pushed into storage and then rendered dynamically into the DOM. The Clipboard API was wired to “Copy” buttons on each entry, using event listeners to grab the text and copy it. The Notifications API was triggered after save, delete, and clear actions, providing system notifications (or alert fallbacks) based on user events. The YouTube embed was injected into a container via JavaScript, ensuring it loads seamlessly with the rest of the page.</p>
+
+    <p><strong>3. What challenges did you encounter, and how did you solve them?</strong><br>
+    The biggest challenge was handling <em>notification permissions</em> — browsers block notifications unless the user explicitly allows them. To solve this, I added a fallback <code>alert()</code> so feedback is always visible. Another challenge was making sure entries render correctly after delete and clear actions; I fixed this by re‑rendering the list after every storage update. Finally, embedding YouTube responsively required CSS tweaks to keep the iframe proportional across devices.</p>
+
+    <p><strong>4. In what ways do these APIs improve your Learning Journal PWA?</strong><br>
+    These APIs transformed the journal from a static site into a <strong>dynamic, interactive app</strong>. LocalStorage ensures my reflections persist across sessions, making the journal truly personal. Clipboard and Notifications improve usability by giving instant feedback and easy sharing. The YouTube embed connects my journal to external resources, enriching the learning experience. Together, they make the PWA more professional, engaging, and aligned with real‑world app functionality.</p>
+  </div>
+</section>
+
+    <!-- Lab 4: Journal entry form -->
+    <section class="journal-form">
+      <h2>Add a Journal Entry</h2>
+      <form id="journal-form">
+        <textarea id="journal-text" rows="6" placeholder="Write your reflection here..." required></textarea>
+        <div class="form-actions">
+          <button type="submit" id="save-entry">Save Entry</button>
+          <button type="button" id="clear-entries">Clear All</button>
+        </div>
+      </form>
+      <p class="note">Saving uses LocalStorage; entries persist after reload. You’ll get a notification when saved.</p>
+    </section>
+
+    <!-- Saved entries render here -->
+    <section class="saved-entries-section">
+      <h2>Saved Entries</h2>
+      <div id="saved-entries" class="saved-entries"></div>
+    </section>
+
+    <!-- Third-Party API: YouTube embed -->
+    <section class="thirdparty-section">
+      <h2>Featured Video</h2>
+      <p>A short video that refreshed my approach this week:</p>
+      <div id="youtube-container" class="youtube-container"></div>
+    </section>
+  </main>
 
   <footer>
     <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
   </footer>
+
+  <script src="js/script.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/browser.js"></script>
+  <script src="js/thirdparty.js"></script>
 </body>
 </html>
