@@ -24,7 +24,7 @@ This project showcases journal reflections, completed projects, and a clean port
 - **JavaScript (ES6)** – Interactivity split across four modular files  
 - **PWA Features** – Offline support, installable app  
 
----
+```
 
 ## 📂 Project Structure
 
