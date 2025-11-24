@@ -28,17 +28,21 @@ This project showcases journal reflections, completed projects, and a clean port
 
 ## 📂 Project Structure
 
-├── index.html # Homepage 
-├── about.html # About page with profile image 
-├── journal.html # Journal entries 
-├── projects.html # Projects showcase 
-├── css/ 
-│ └── style.css # Main stylesheet 
-├── js/ 
-│ ├── script.js # General interactivity (date/time, theme toggle, location badge) │ ├── storage.js # LocalStorage helpers (save, load, delete journal entries/projects) 
-│ ├── browser.js # Browser APIs (geolocation, clipboard, etc.) 
-│ └── thirdparty.js # Integrations with external APIs or services 
-└── images/ # Profile & project images
+Learning-journal-PWA/
+├── index.html
+├── about.html
+├── journal.html
+├── projects.html
+├── css/
+│   └── style.css
+├── js/
+│   ├── script.js
+│   ├── storage.js
+│   ├── browser.js
+│   └── thirdparty.js
+├── images/
+│   └── profile.jpg
+└── README.md
 
 ---
 
