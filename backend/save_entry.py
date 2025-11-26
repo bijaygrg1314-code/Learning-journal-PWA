@@ -2,25 +2,37 @@ import json
 from datetime import datetime
 import os
 
-# CORRECT PATH - since both files are in the same 'backend' folder
-DATA_FILE = 'reflections.json'
+# 1. Define the path to the JSON file relative to the script
+json_file_path = os.path.join(os.path.dirname(__file__), 'reflections.json')
 
-new_reflection_text = input("Please type your reflection: ")
+# 2. Get user input
+reflection_text = input("Type your weekly reflection: ")
 
-try:
-    with open(DATA_FILE, 'r') as file:
-        reflections = json.load(file)
-except FileNotFoundError:
-    # If file doesn't exist, start with empty list
-    reflections = []
+if reflection_text:
+    # 3. Create a new entry object
+    new_entry = {
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "text": reflection_text
+    }
 
-new_entry = {
-    "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    "reflection": new_reflection_text,
-}
-reflections.append(new_entry)
+    # 4. Load existing data
+    data = []
+    try:
+        with open(json_file_path, 'r') as f:
+            data = json.load(f)
+    except FileNotFoundError:
+        print(f"File not found, creating new one: {json_file_path}")
+    except json.JSONDecodeError:
+        print("JSON file is empty or invalid, starting with an empty list.")
 
-with open(DATA_FILE, 'w') as file:
-    json.dump(reflections, file, indent=4)
+    # 5. Append the new entry
+    data.append(new_entry)
 
-print("Reflection successfully saved.")
+    # 6. Save the updated data back to the JSON file
+    with open(json_file_path, 'w') as f:
+        json.dump(data, f, indent=2)
+
+    print("Entry saved successfully to reflections.json.")
+else:
+    print("No reflection entered, cancelling save.")
+
