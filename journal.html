@@ -11,7 +11,6 @@
 
   <main>
     
-    <!-- Collapsible reflections -->
     <section class="journal-entry">
       <button class="collapsible">Week 2 Reflection</button>
       <div class="content">
@@ -40,43 +39,58 @@
       </div>
     </section>
 
-<section class="journal-entry">
-  <button class="collapsible">Week 4 Reflection</button>
-  <div class="content">
-    <p><strong>1. Which Storage, Browser, and Third‑Party APIs did you choose, and why?</strong><br>
-    For Storage, I used <code>LocalStorage</code> because it’s simple and reliable for persisting journal entries and theme preferences across reloads. For the Browser API, I implemented the <code>Clipboard API</code> to let me copy entries quickly, and the <code>Notifications API</code> to give feedback when saving, deleting, or clearing entries. For the Third‑Party API, I integrated a <code>YouTube embed</code> to bring external learning content directly into my journal. These choices balanced ease of implementation with meaningful functionality.</p>
+    <section class="journal-entry">
+      <button class="collapsible">Week 4 Reflection</button>
+      <div class="content">
+        <p><strong>1. Which Storage, Browser, and Third‑Party APIs did you choose, and why?</strong><br>
+        For Storage, I used <code>LocalStorage</code> because it’s simple and reliable for persisting journal entries and theme preferences across reloads. For the Browser API, I implemented the <code>Clipboard API</code> to let me copy entries quickly, and the <code>Notifications API</code> to give feedback when saving, deleting, or clearing entries. For the Third‑Party API, I integrated a <code>YouTube embed</code> to bring external learning content directly into my journal. These choices balanced ease of implementation with meaningful functionality.</p>
 
-    <p><strong>2. How did you integrate each API with DOM manipulation?</strong><br>
-    LocalStorage was tied to the journal form: when I save an entry, it’s pushed into storage and then rendered dynamically into the DOM. The Clipboard API was wired to “Copy” buttons on each entry, using event listeners to grab the text and copy it. The Notifications API was triggered after save, delete, and clear actions, providing system notifications (or alert fallbacks) based on user events. The YouTube embed was injected into a container via JavaScript, ensuring it loads seamlessly with the rest of the page.</p>
+        <p><strong>2. How did you integrate each API with DOM manipulation?</strong><br>
+        LocalStorage was tied to the journal form: when I save an entry, it’s pushed into storage and then rendered dynamically into the DOM. The Clipboard API was wired to “Copy” buttons on each entry, using event listeners to grab the text and copy it. The Notifications API was triggered after save, delete, and clear actions, providing system notifications (or alert fallbacks) based on user events. The YouTube embed was injected into a container via JavaScript, ensuring it loads seamlessly with the rest of the page.</p>
 
-    <p><strong>3. What challenges did you encounter, and how did you solve them?</strong><br>
-    The biggest challenge was handling <em>notification permissions</em> — browsers block notifications unless the user explicitly allows them. To solve this, I added a fallback <code>alert()</code> so feedback is always visible. Another challenge was making sure entries render correctly after delete and clear actions; I fixed this by re‑rendering the list after every storage update. Finally, embedding YouTube responsively required CSS tweaks to keep the iframe proportional across devices.</p>
+        <p><strong>3. What challenges did you encounter, and how did you solve them?</strong><br>
+        The biggest challenge was handling <em>notification permissions</em> — browsers block notifications unless the user explicitly allows them. To solve this, I added a fallback <code>alert()</code> so feedback is always visible. Another challenge was making sure entries render correctly after delete and clear actions; I fixed this by re‑rendering the list after every storage update. Finally, embedding YouTube responsively required CSS tweaks to keep the iframe proportional across devices.</p>
 
-    <p><strong>4. In what ways do these APIs improve your Learning Journal PWA?</strong><br>
-    These APIs transformed the journal from a static site into a <strong>dynamic, interactive app</strong>. LocalStorage ensures my reflections persist across sessions, making the journal truly personal. Clipboard and Notifications improve usability by giving instant feedback and easy sharing. The YouTube embed connects my journal to external resources, enriching the learning experience. Together, they make the PWA more professional, engaging, and aligned with real‑world app functionality.</p>
-  </div>
-</section>
-
-    <!-- Lab 4: Journal entry form -->
-    <section class="journal-form">
-      <h2>Add a Journal Entry</h2>
-      <form id="journal-form">
-        <textarea id="journal-text" rows="6" placeholder="Write your reflection here..." required></textarea>
-        <div class="form-actions">
-          <button type="submit" id="save-entry">Save Entry</button>
-          <button type="button" id="clear-entries">Clear All</button>
-        </div>
-      </form>
-      <p class="note">Saving uses LocalStorage; entries persist after reload. You’ll get a notification when saved.</p>
+        <p><strong>4. In what ways do these APIs improve your Learning Journal PWA?</strong><br>
+        These APIs transformed the journal from a static site into a <strong>dynamic, interactive app</strong>. LocalStorage ensures my reflections persist across sessions, making the journal truly personal. Clipboard and Notifications improve usability by giving instant feedback and easy sharing. The YouTube embed connects my journal to external resources, enriching the learning experience. Together, they make the PWA more professional, engaging, and aligned with real‑world app functionality.</p>
+      </div>
     </section>
 
-    <!-- Saved entries render here -->
+    <section class="journal-entry">
+      <button class="collapsible">Week 5 Reflection</button>
+      <div class="content">
+        <p><strong>1. How is storing data in a JSON file different from using browser storage?</strong><br>
+        Storing data in a JSON file (file-based storage) saves data permanently to the server's or user's filesystem, persisting across different browsers and cleared caches. This data can be created and updated outside the browser using server-side tools like Python. In contrast, browser storage (like LocalStorage) saves data locally within the user's specific browser instance and can only be accessed by client-side JavaScript.</p>
+
+        <p><strong>2. How did you use Python to create or update your JSON file?</strong><br>
+        I used Python with its built-in <code>json</code> module to manage the <code>reflections.json</code> file. The <code>save_entry.py</code> script first uses <code>json.load()</code> to read the existing list of reflections. It then appends a new reflection object (with a timestamp) to the list. Finally, it uses <code>json.dump()</code> to write the entire updated list back to the <code>reflections.json</code> file, effectively saving the changes and providing file persistence.</p>
+
+        <p><strong>3. What does your PWA show locally, and what will users see on GitHub? Are they the same? Why or why not?</strong><br>
+        They are generally not the same. When running the PWA locally with a live server, the JavaScript can successfully fetch and display the entries from <code>/backend/reflections.json</code>. However, when deployed to static hosting like GitHub Pages, the browser's security rules (Same-Origin Policy) typically prevent client-side JavaScript from fetching local files, resulting in an error. Consequently, users on GitHub will likely not see the dynamically loaded JSON entries, only the static HTML structure.</p>
+
+        <p><strong>4. What extra feature did you add to your PWA using the JSON file, and why?</strong><br>
+        I added a Reflection Counter feature. This feature retrieves the reflection array from <code>reflections.json</code>, calculates its length using <code>entries.length</code>, and displays the total number of entries on the journal page. This was chosen because it provides immediate, quantifiable feedback to the user and serves as clear evidence that the JavaScript successfully fetched, parsed, and processed the new file-based JSON data.</p>
+      </div>
+    </section>
+
+    <section class="journal-form">
+      <h2>Add a Journal Entry (Now via Python)</h2>
+      <p class="note">To add a new entry, you must run the <code>python backend/save_entry.py</code> script via your terminal. The form below is disabled as <strong>LocalStorage is replaced by the file-based JSON backend</strong>.</p>
+      <form id="journal-form" style="pointer-events: none; opacity: 0.5;">
+        <textarea id="journal-text" rows="6" placeholder="Run Python script to write reflection..." disabled></textarea>
+        <div class="form-actions">
+          <button type="submit" id="save-entry" disabled>Save Entry</button>
+          <button type="button" id="clear-entries" disabled>Clear All</button>
+        </div>
+      </form>
+    </section>
+
     <section class="saved-entries-section">
       <h2>Saved Entries</h2>
+      <p id="reflection-count" class="note">Total Reflections: 0</p>
       <div id="saved-entries" class="saved-entries"></div>
     </section>
 
-    <!-- Third-Party API: YouTube embed -->
     <section class="thirdparty-section">
       <h2>Featured Video</h2>
       <p>A short video that refreshed my approach this week:</p>
@@ -92,5 +106,6 @@
   <script src="js/storage.js"></script>
   <script src="js/browser.js"></script>
   <script src="js/thirdparty.js"></script>
+  <script src="js/json_data.js"></script>
 </body>
 </html>
