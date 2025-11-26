@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +19,7 @@
         I began with a simple one-column layout optimized for small screens, focusing on readability and touch-friendly spacing. My goal was to ensure that content felt natural and uncluttered on mobile devices. Once the base layout was solid, I introduced media queries to adapt the design for tablets and desktops — adjusting padding, font sizes, and layout flow. This progressive enhancement strategy helped me build a responsive experience that feels intuitive across all screen sizes.</p>
 
         <p><strong>2. What was the most useful HTML or CSS concept you applied this week?</strong><br>
-        Flexbox was a game-changer. It allowed me to align and distribute elements with precision, especially in the navbar and project cards. I also refined my use of margins and padding to create visual breathing room between sections. These small adjustments made a big difference in the overall polish of the site. I started thinking more like a designer — not just placing elements, but shaping the user’s experience.</p>
+        Flexbox was a game-changer. It allowed me to align and distribute elements with precision, especially in the navbar and project cards. I also refined my use of margins and padding to create visual breathing room between sections. These small adjustments made a big difference in the overall polish of the site. I started thinking more like a designer — not just placing elements, but shaping the user's experience.</p>
 
         <p><strong>3. What part of HTML or CSS did you find most challenging or confusing?</strong><br>
         Media queries were tricky at first. I struggled to understand which styles were active at different breakpoints, especially when multiple rules overlapped. I had to test my site on various screen sizes and use browser dev tools to inspect which styles were being applied. Through trial and error, I learned how to structure my CSS more clearly and use min-width logic to layer styles effectively. It was frustrating at times, but I came out with a stronger grasp of responsive design.</p>
@@ -29,10 +30,10 @@
       <button class="collapsible">Week 3 Reflection</button>
       <div class="content">
         <p><strong>1. Which DOM selection methods did you use, and why?</strong><br>
-        This week I used both <code>getElementById()</code> and <code>querySelector()</code> to target elements in my Learning Journal PWA. I chose <code>getElementById()</code> for unique elements like the date/time display and theme toggle button because it’s fast and direct. For reusable or styled components like collapsible sections, I used <code>querySelector()</code> to select by class. This gave me flexibility to apply interactivity across multiple elements without duplicating code.</p>
+        This week I used both <code>getElementById()</code> and <code>querySelector()</code> to target elements in my Learning Journal PWA. I chose <code>getElementById()</code> for unique elements like the date/time display and theme toggle button because it's fast and direct. For reusable or styled components like collapsible sections, I used <code>querySelector()</code> to select by class. This gave me flexibility to apply interactivity across multiple elements without duplicating code.</p>
 
         <p><strong>2. What was the most challenging part about linking JavaScript with HTML?</strong><br>
-        The biggest challenge was making sure my JavaScript executed only after the DOM was fully loaded. Initially, I placed the <code>&lt;script&gt;</code> tag in the <code>&lt;head&gt;</code>, which caused errors because the elements weren’t available yet. Once I moved it to the bottom of the <code>&lt;body&gt;</code>, everything worked smoothly. I also had to debug why my collapsible buttons weren’t responding — turns out I needed to wrap the event listeners inside a loop to target each button individually.</p>
+        The biggest challenge was making sure my JavaScript executed only after the DOM was fully loaded. Initially, I placed the <code>&lt;script&gt;</code> tag in the <code>&lt;head&gt;</code>, which caused errors because the elements weren't available yet. Once I moved it to the bottom of the <code>&lt;body&gt;</code>, everything worked smoothly. I also had to debug why my collapsible buttons weren't responding — turns out I needed to wrap the event listeners inside a loop to target each button individually.</p>
 
         <p><strong>3. How did you test and debug your JavaScript code?</strong><br>
         I relied heavily on <code>console.log()</code> to trace values and confirm that my event listeners were firing. I also used browser dev tools to inspect elements and check if styles were being applied correctly. Testing across different screen sizes helped me catch layout issues, especially with the theme toggle button. I refined its position and shape to avoid overlapping the navbar and make it visually appealing. Each bug taught me something new about how the DOM behaves and how to write cleaner, modular code.</p>
@@ -43,10 +44,10 @@
       <button class="collapsible">Week 4 Reflection</button>
       <div class="content">
         <p><strong>1. Which Storage, Browser, and Third‑Party APIs did you choose, and why?</strong><br>
-        For Storage, I used <code>LocalStorage</code> because it’s simple and reliable for persisting journal entries and theme preferences across reloads. For the Browser API, I implemented the <code>Clipboard API</code> to let me copy entries quickly, and the <code>Notifications API</code> to give feedback when saving, deleting, or clearing entries. For the Third‑Party API, I integrated a <code>YouTube embed</code> to bring external learning content directly into my journal. These choices balanced ease of implementation with meaningful functionality.</p>
+        For Storage, I used <code>LocalStorage</code> because it's simple and reliable for persisting journal entries and theme preferences across reloads. For the Browser API, I implemented the <code>Clipboard API</code> to let me copy entries quickly, and the <code>Notifications API</code> to give feedback when saving, deleting, or clearing entries. For the Third‑Party API, I integrated a <code>YouTube embed</code> to bring external learning content directly into my journal. These choices balanced ease of implementation with meaningful functionality.</p>
 
         <p><strong>2. How did you integrate each API with DOM manipulation?</strong><br>
-        LocalStorage was tied to the journal form: when I save an entry, it’s pushed into storage and then rendered dynamically into the DOM. The Clipboard API was wired to “Copy” buttons on each entry, using event listeners to grab the text and copy it. The Notifications API was triggered after save, delete, and clear actions, providing system notifications (or alert fallbacks) based on user events. The YouTube embed was injected into a container via JavaScript, ensuring it loads seamlessly with the rest of the page.</p>
+        LocalStorage was tied to the journal form: when I save an entry, it's pushed into storage and then rendered dynamically into the DOM. The Clipboard API was wired to "Copy" buttons on each entry, using event listeners to grab the text and copy it. The Notifications API was triggered after save, delete, and clear actions, providing system notifications (or alert fallbacks) based on user events. The YouTube embed was injected into a container via JavaScript, ensuring it loads seamlessly with the rest of the page.</p>
 
         <p><strong>3. What challenges did you encounter, and how did you solve them?</strong><br>
         The biggest challenge was handling <em>notification permissions</em> — browsers block notifications unless the user explicitly allows them. To solve this, I added a fallback <code>alert()</code> so feedback is always visible. Another challenge was making sure entries render correctly after delete and clear actions; I fixed this by re‑rendering the list after every storage update. Finally, embedding YouTube responsively required CSS tweaks to keep the iframe proportional across devices.</p>
@@ -66,46 +67,91 @@
         I used Python with its built-in <code>json</code> module to manage the <code>reflections.json</code> file. The <code>save_entry.py</code> script first uses <code>json.load()</code> to read the existing list of reflections. It then appends a new reflection object (with a timestamp) to the list. Finally, it uses <code>json.dump()</code> to write the entire updated list back to the <code>reflections.json</code> file, effectively saving the changes and providing file persistence.</p>
 
         <p><strong>3. What does your PWA show locally, and what will users see on GitHub? Are they the same? Why or why not?</strong><br>
-        They are generally not the same. When running the PWA locally with a live server, the JavaScript can successfully fetch and display the entries from <code>/backend/reflections.json</code>. However, when deployed to static hosting like GitHub Pages, the browser's security rules (Same-Origin Policy) typically prevent client-side JavaScript from fetching local files, resulting in an error. Consequently, users on GitHub will likely not see the dynamically loaded JSON entries, only the static HTML structure.</p>
+        They are generally not the same. When running the PWA locally with a live server, the JavaScript can successfully fetch and display the entries from <code>/backend/reflections.json</code>. However, when deployed to static hosting like GitHub Pages, the browser's security rules (Same-Origin Policy) typically prevent client-side JavaScript from fetching local files. I implemented graceful error handling so users on GitHub will see a fallback interface with LocalStorage entries only, while the core functionality remains intact.</p>
 
         <p><strong>4. What extra feature did you add to your PWA using the JSON file, and why?</strong><br>
-        I added a Reflection Counter feature. This feature retrieves the reflection array from <code>reflections.json</code>, calculates its length using <code>entries.length</code>, and displays the total number of entries on the journal page. This was chosen because it provides immediate, quantifiable feedback to the user and serves as clear evidence that the JavaScript successfully fetched, parsed, and processed the new file-based JSON data.</p>
+        I added a comprehensive <strong>Journal Management Dashboard</strong> that includes advanced statistics, search functionality, and data export features. The dashboard shows real-time counts of Python vs Browser entries, total word counts, and provides search across all journal entries. I also added JSON export capability to download all entries for backup. These features demonstrate practical use of JSON data while significantly enhancing the user experience by providing insights into journal activity and easy content management.</p>
+      </div>
+    </section>
+
+    <!-- Lab 5: Python & JSON Backend Integration -->
+    <section class="journal-management">
+      <h2> Journal Statistics & Tools</h2>
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3>Total Entries</h3>
+          <p id="total-entries">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Python Entries</h3>
+          <p id="python-entries">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Browser Entries</h3>
+          <p id="browser-entries">0</p>
+        </div>
+        <div class="stat-card">
+          <h3>Total Words</h3>
+          <p id="total-words">0</p>
+        </div>
+      </div>
+      
+      <div class="tools-container">
+        <div class="search-box">
+          <input type="text" id="search-entries" placeholder=" Search entries...">
+        </div>
+        <button id="export-json" class="tool-btn"> Export JSON</button>
+        <button id="refresh-data" class="tool-btn"> Refresh Data</button>
       </div>
     </section>
 
     <section class="journal-form">
-      <h2>Add a Journal Entry (Now via Python)</h2>
-      <p class="note">To add a new entry, you must run the <code>python backend/save_entry.py</code> script via your terminal. The form below is disabled as <strong>LocalStorage is replaced by the file-based JSON backend</strong>.</p>
-      <form id="journal-form" style="pointer-events: none; opacity: 0.5;">
-        <textarea id="journal-text" rows="6" placeholder="Run Python script to write reflection..." disabled></textarea>
+      <h2>Add a Journal Entry</h2>
+      <div class="entry-methods">
+        <div class="method-card">
+          <h3> Python Method (Lab 5 - Recommended)</h3>
+          <p>Run the Python script to add entries that persist in the JSON file:</p>
+          <code class="terminal-command">python backend/save_entry.py</code>
+          <p class="note">Entries added via Python will be available across all browsers and devices.</p>
+        </div>
+        
+        <div class="method-card">
+          <h3>🌐 Browser Method</h3>
+          <p>Use the form below for quick browser-only entries (LocalStorage):</p>
+        </div>
+      </div>
+      
+      <form id="journal-form">
+        <textarea id="journal-text" rows="6" placeholder="Write your reflection here (minimum 10 characters)..."></textarea>
         <div class="form-actions">
-          <button type="submit" id="save-entry" disabled>Save Entry</button>
-          <button type="button" id="clear-entries" disabled>Clear All</button>
+          <button type="submit" id="save-entry"> Save to Browser</button>
+          <button type="button" id="clear-form"> Clear Form</button>
         </div>
       </form>
     </section>
 
     <section class="saved-entries-section">
-      <h2>Saved Entries</h2>
-      <p id="reflection-count" class="note">Total Reflections: 0</p>
-      <div id="saved-entries" class="saved-entries"></div>
+      <h2> Saved Entries</h2>
+      <p id="reflection-count" class="note">Total Reflections: Loading...</p>
+      <div id="saved-entries" class="saved-entries">
+        <div class="loading">Loading entries...</div>
+      </div>
     </section>
 
     <section class="thirdparty-section">
-      <h2>Featured Video</h2>
+      <h2> Featured Learning Video</h2>
       <p>A short video that refreshed my approach this week:</p>
       <div id="youtube-container" class="youtube-container"></div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
+    <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA | Lab 5 - Python & JSON Backend</p>
   </footer>
 
   <script src="js/script.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/browser.js"></script>
   <script src="js/thirdparty.js"></script>
-
 </body>
 </html>
