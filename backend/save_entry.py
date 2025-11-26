@@ -1,45 +1,62 @@
+
 import json
-from datetime import datetime
 import os
-import time
+from datetime import datetime
 
-# 1. Define the path to the JSON file relative to the script
-json_file_path = os.path.join(os.path.dirname(__file__), 'reflections.json')
-
-# 2. Get user input
-reflection_text = input("Type your weekly reflection: ")
-
-if reflection_text:
-    # Generate a unique ID (based on current time in milliseconds, similar to JS Date.now())
-    unique_id = int(time.time() * 1000)
-
-    # 3. Create a new entry object that matches the JS class expectations
+def save_reflection():
+    """Save a new reflection entry to the JSON file"""
+    
+    # Define the path to the JSON file
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    json_file_path = os.path.join(script_dir, 'reflections.json')
+    
+    print("\n" + "="*50)
+    print("LEARNING JOURNAL - ADD NEW REFLECTION")
+    print("="*50)
+    
+    # Get user input
+    reflection_text = input("Type your weekly reflection: ").strip()
+    
+    # Validation
+    if not reflection_text:
+        print(" No reflection entered. Operation cancelled.")
+        return False
+    
+    if len(reflection_text) < 10:
+        print(" Reflection too short. Please write at least 10 characters.")
+        return False
+    
+    # Create new entry
     new_entry = {
-        "id": unique_id,
-        "title": "Python Reflection", # Added default title
-        "content": reflection_text,   # Changed 'text' to 'content'
-        "date": datetime.now().strftime("%Y-%m-%d"),
-        "time": datetime.now().strftime("%H:%M:%S"),
-        "source": "python"            # Explicitly mark the source
+        "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "text": reflection_text
     }
-
-    # 4. Load existing data
-    data = []
+    
     try:
-        with open(json_file_path, 'r') as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        print(f"File not found, creating new one: {json_file_path}")
-    except json.JSONDecodeError:
-        print("JSON file is empty or invalid, starting with an empty list.")
+        # Load existing data
+        if os.path.exists(json_file_path):
+            with open(json_file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        else:
+            data = []
+            print(" Creating new reflections.json file...")
+        
+        # Append new entry
+        data.append(new_entry)
+        
+        # Save back to file
+        with open(json_file_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        
+        print(f" Reflection saved successfully!")
+        print(f" Date: {new_entry['date']}")
+        print(f" Entry #{len(data)} added to reflections.json")
+        return True
+        
+    except Exception as e:
+        print(f" Error saving reflection: {e}")
+        return False
 
-    # 5. Append the new entry (Prepended to display newest first when fetching)
-    data.insert(0, new_entry) 
-
-    # 6. Save the updated data back to the JSON file
-    with open(json_file_path, 'w') as f:
-        json.dump(data, f, indent=2)
-
-    print("Entry saved successfully to reflections.json.")
-else:
-    print("No reflection entered, cancelling save.")
+if __name__ == "__main__":
+    save_reflection()
+[file content end]
