@@ -1,71 +1,207 @@
-// ===================================
-// NOTE: JOURNAL ENTRY PERSISTENCE (LocalStorage)
-// HAS BEEN DISABLED for Lab 5.
-// Entries are now managed via Python/JSON file.
-// ===================================
+const JOURNAL_STORAGE_KEY = 'learningJournalEntries';
+const JSON_DATA_PATH = 'backend/reflections.json'; // Adjusted path for better compatibility
 
-// Theme persistence (Kept Active)
-function saveThemePreference(isDark) {
-  localStorage.setItem("theme", isDark ? "dark" : "light");
+// Enhanced Storage Manager Class
+class JournalStorageManager {
+    constructor() {
+        this.localKey = JOURNAL_STORAGE_KEY;
+    }
+
+    // === EXISTING LOCALSTORAGE METHODS ===
+    // Used to delete entries ONLY saved in the browser (source: 'browser')
+    deleteEntry(id) {
+        const entryId = parseInt(id); 
+        let existingEntries = this.getLocalEntries();
+        // Filter out the entry to delete
+        const updatedEntries = existingEntries.filter(entry => entry.id !== entryId);
+        localStorage.setItem(this.localKey, JSON.stringify(updatedEntries));
+        // Re-display all entries (local + JSON)
+        this.displayAllEntries();
+    }
+
+    // Used to save new entries ONLY to the browser (source: 'browser')
+    saveEntry(title, content) {
+        const existingEntries = this.getLocalEntries();
+
+        const newEntry = {
+            // Use Date.now() for unique ID for local entries
+            id: Date.now(), 
+            title: title,
+            content: content,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            source: 'browser' // Label local entries
+        };
+
+        existingEntries.unshift(newEntry);
+        localStorage.setItem(this.localKey, JSON.stringify(existingEntries));
+    }
+
+    getLocalEntries() {
+        return JSON.parse(localStorage.getItem(this.localKey)) || [];
+    }
+
+    // === NEW JSON FILE METHODS ===
+    async loadJSONEntries() {
+        try {
+            // Note: The path must be correct relative to journal.html
+            const response = await fetch(JSON_DATA_PATH); 
+            
+            if (!response.ok) {
+                // Return empty list if file not found (e.g., on GitHub Pages)
+                console.warn('Could not load JSON entries. HTTP Status:', response.status);
+                return [];
+            }
+            
+            const jsonEntries = await response.json();
+            
+            // Add source identifier and a unique ID for JSON entries
+            return jsonEntries.map((entry, index) => ({
+                // Use a combination of index and a unique large number for ID
+                id: (9000000000000 + index), 
+                title: entry.title || 'Python Reflection', // Title may be missing from simple Python save
+                content: entry.text || entry.content, // Use text if content is not available
+                date: entry.date,
+                time: entry.time || '',
+                source: 'python' // Label file-based entries
+            }));
+        } catch (error) {
+            console.error('JSON fetch or parsing error:', error);
+            return [];
+        }
+    }
+
+    // === DATA MERGING, SORTING, AND DEDUPLICATION ===
+    async getAllEntries() {
+        const localEntries = this.getLocalEntries();
+        const jsonEntries = await this.loadJSONEntries();
+        
+        // Combine all entries
+        const allEntries = [...localEntries, ...jsonEntries];
+        
+        // Sort by ID (newest first)
+        return allEntries.sort((a, b) => b.id - a.id);
+    }
+
+    // === ENHANCED DISPLAY FUNCTION (Lab 5 Goal) ===
+    async displayAllEntries() {
+        // Renamed container ID to match the old project structure
+        const container = document.getElementById('saved-entries'); 
+        if (!container) return;
+
+        const entries = await this.getAllEntries();
+
+        // Clear existing content
+        container.innerHTML = ''; 
+
+        // Add entry counter and stats (Lab 5 Extra Feature)
+        const browserEntries = entries.filter(e => e.source === 'browser').length;
+        const pythonEntries = entries.filter(e => e.source === 'python').length;
+
+        // Update the counter element
+        const countElement = document.getElementById('reflection-count');
+        if (countElement) {
+            countElement.innerHTML = `Total entries: <strong>${entries.length}</strong> (Browser: ${browserEntries}, Python: ${pythonEntries})`;
+        }
+        
+        if (entries.length === 0) {
+            container.innerHTML = `<p>No custom entries saved yet. Add entries using the form above or the Python script!</p>`;
+            return;
+        }
+
+        entries.forEach(entry => {
+            const sourceBadge = entry.source === 'python' 
+                ? '<span class="source-badge python-badge" style="background-color: #FFA726;">Python/File</span>' 
+                : '<span class="source-badge browser-badge" style="background-color: #FF6F00;">Browser/Local</span>';
+            
+            // Render card using existing styling classes
+            const card = document.createElement("div");
+            card.className = "saved-entry";
+            card.setAttribute('data-entry-id', entry.id);
+            card.setAttribute('data-source', entry.source);
+
+            card.innerHTML = `
+                <div class="meta">${entry.date} ${entry.time} ${sourceBadge}</div>
+                <div class="text">${entry.content}</div>
+                <div class="entry-actions">
+                    <button class="copy-btn" data-content="${entry.content}">Copy</button>
+                    ${entry.source === 'browser' 
+                        ? `<button class="delete-btn" data-entry-id="${entry.id}">Delete</button>`
+                        : '<span class="delete-hint">(File-based entry)</span>'
+                    }
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Re-attach listeners for the delete and copy buttons
+        this.setupActionHandlers();
+    }
+
+    // === ACTION HANDLERS SETUP ===
+    setupActionHandlers() {
+        // Setup Delete Handler (Delegated)
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                const entryId = event.target.dataset.entryId;
+                if (confirm('Are you sure you want to delete this LocalStorage entry?')) {
+                    this.deleteEntry(entryId);
+                }
+            });
+        });
+
+        // Setup Copy Handler (Delegated)
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.parentElement.previousElementSibling.textContent;
+                 // Assuming browser.js has copyToClipboard function
+                if (typeof copyToClipboard === "function") {
+                   copyToClipboard(content);
+                }
+            });
+        });
+    }
 }
 
-function loadThemePreference() {
-  const theme = localStorage.getItem("theme");
-  if (theme === "dark") {
-    document.body.classList.add("dark-mode");
-    return true;
-  }
-  return false;
-}
+// Initialize the storage manager
+const journalManager = new JournalStorageManager();
 
-// Apply persisted theme immediately
-loadThemePreference();
+// Function to attach initial DOM event handlers (run once)
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Initial display of all entries (local + JSON)
+    journalManager.displayAllEntries();
 
-// ===================================
-// DISABLED JOURNAL ENTRY FUNCTIONS BELOW
-// All functions related to entries are now placeholder stubs 
-// to prevent runtime errors from other scripts.
-// ===================================
+    // 2. Setup form submission handler for LocalStorage entries
+    const form = document.getElementById('journal-form');
+    const textarea = document.getElementById('journal-text');
+    
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            const content = textarea.value.trim();
+            const title = 'Manual Entry'; // Simplification since your form only has content
 
-function getEntries() {
-  console.warn("getEntries() is disabled. Data is managed by reflections.json now.");
-  return []; 
-}
+            if (content.length < 10) {
+                alert("Please write at least 10 words.");
+                return;
+            }
+            
+            // Save to LocalStorage
+            journalManager.saveEntry(title, content);
+            textarea.value = "";
+            
+            // Re-display the merged list
+            journalManager.displayAllEntries(); 
 
-function setEntries(entries) { 
-  console.warn("setEntries() is disabled."); 
-}
+            // Notify on save (assuming notifySaved from browser.js is available)
+            if (typeof notifySaved === "function") {
+                await notifySaved("Browser entry saved!");
+            }
+        });
+    }
 
-function saveJournalEntry(text) { 
-  console.warn("saveJournalEntry() is disabled. Use Python script."); 
-}
-
-function clearAllEntries() { 
-  console.warn("clearAllEntries() is disabled.");
-}
-
-// ===== Render entries (Disabled) =====
-function renderSavedEntries() {
-  // This function is now entirely handled by json_data.js via fetchAndRenderJsonEntries()
-}
-
-// ===== Hook up form (Disabled) =====
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("journal-form");
-  const textarea = document.getElementById("journal-text");
-  const clearBtn = document.getElementById("clear-entries");
-
-  // Prevent form submission and clearing entries
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Form submission is disabled. Use 'python backend/save_entry.py' to save entries.");
+    // 3. Setup Clear All (Disabled, as requested by lab)
+    document.getElementById('clear-entries')?.addEventListener('click', () => {
+        alert("Clearing all entries is disabled. Please delete individual LocalStorage entries.");
     });
-  }
-
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      alert("Clear All Entries is disabled. Data is in the JSON file.");
-    });
-  }
 });
