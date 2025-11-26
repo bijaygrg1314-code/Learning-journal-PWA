@@ -1,4 +1,10 @@
-// Theme persistence
+// ===================================
+// NOTE: JOURNAL ENTRY PERSISTENCE (LocalStorage)
+// HAS BEEN DISABLED for Lab 5.
+// Entries are now managed via Python/JSON file.
+// ===================================
+
+// Theme persistence (Kept Active)
 function saveThemePreference(isDark) {
   localStorage.setItem("theme", isDark ? "dark" : "light");
 }
@@ -15,113 +21,51 @@ function loadThemePreference() {
 // Apply persisted theme immediately
 loadThemePreference();
 
-// Journal entries persistence
+// ===================================
+// DISABLED JOURNAL ENTRY FUNCTIONS BELOW
+// All functions related to entries are now placeholder stubs 
+// to prevent runtime errors from other scripts.
+// ===================================
+
 function getEntries() {
-  return JSON.parse(localStorage.getItem("entries") || "[]");
+  console.warn("getEntries() is disabled. Data is managed by reflections.json now.");
+  return []; 
 }
 
-function setEntries(entries) {
-  localStorage.setItem("entries", JSON.stringify(entries));
+function setEntries(entries) { 
+  console.warn("setEntries() is disabled."); 
 }
 
-function saveJournalEntry(text) {
-  const entries = getEntries();
-  entries.push({ text, date: new Date().toLocaleString() });
-  setEntries(entries);
+function saveJournalEntry(text) { 
+  console.warn("saveJournalEntry() is disabled. Use Python script."); 
 }
 
-function clearAllEntries() {
-  localStorage.removeItem("entries");
+function clearAllEntries() { 
+  console.warn("clearAllEntries() is disabled.");
 }
 
-// ===== Render entries =====
+// ===== Render entries (Disabled) =====
 function renderSavedEntries() {
-  const container = document.getElementById("saved-entries");
-  if (!container) return;
-  container.innerHTML = "";
-
-  const entries = getEntries();
-  entries.slice().reverse().forEach((e, idx) => {
-    const card = document.createElement("div");
-    card.className = "saved-entry";
-    card.innerHTML = `
-      <div class="meta">${e.date}</div>
-      <div class="text">${e.text}</div>
-      <div class="entry-actions">
-        <button class="copy-btn" data-index="${idx}">Copy</button>
-        <button class="delete-btn" data-index="${idx}">Delete</button>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-
-  // Copy buttons
-  container.querySelectorAll(".copy-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const idx = parseInt(btn.dataset.index, 10);
-      const entries = getEntries();
-      const item = entries[entries.length - 1 - idx]; // reversed view
-      if (item && typeof copyToClipboard === "function") {
-        copyToClipboard(item.text);
-      }
-    });
-  });
-
-  // Delete buttons
-  container.querySelectorAll(".delete-btn").forEach(btn => {
-    btn.addEventListener("click", async () => {
-      const idx = parseInt(btn.dataset.index, 10);
-      const entries = getEntries();
-      entries.splice(entries.length - 1 - idx, 1); // reversed view
-      setEntries(entries);
-      renderSavedEntries();
-
-      // Notify on delete
-      if (typeof notifyDeleted === "function") {
-        await notifyDeleted("Entry deleted!");
-      }
-    });
-  });
+  // This function is now entirely handled by json_data.js via fetchAndRenderJsonEntries()
 }
 
-// ===== Hook up form =====
+// ===== Hook up form (Disabled) =====
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("journal-form");
   const textarea = document.getElementById("journal-text");
   const clearBtn = document.getElementById("clear-entries");
 
-  if (form && textarea) {
-    form.addEventListener("submit", async (e) => {
+  // Prevent form submission and clearing entries
+  if (form) {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const text = textarea.value.trim();
-      if (text.length < 10) {
-        alert("Please write at least 10 words.");
-        return;
-      }
-      saveJournalEntry(text);
-      textarea.value = "";
-      renderSavedEntries();
-
-      // Notify on save
-      if (typeof notifySaved === "function") {
-        await notifySaved("Entry saved!");
-      }
+      alert("Form submission is disabled. Use 'python backend/save_entry.py' to save entries.");
     });
   }
 
   if (clearBtn) {
-    clearBtn.addEventListener("click", async () => {
-      if (confirm("Clear all saved entries?")) {
-        clearAllEntries();
-        renderSavedEntries();
-
-        // Notify on clear
-        if (typeof notifyDeleted === "function") {
-          await notifyDeleted("All entries cleared!");
-        }
-      }
+    clearBtn.addEventListener("click", () => {
+      alert("Clear All Entries is disabled. Data is in the JSON file.");
     });
   }
-
-  renderSavedEntries();
 });
