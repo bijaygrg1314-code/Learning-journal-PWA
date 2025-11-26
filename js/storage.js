@@ -1,5 +1,5 @@
 const JOURNAL_STORAGE_KEY = 'learningJournalEntries';
-const JSON_DATA_PATH = 'backend/reflections.json'; // Adjusted path for better compatibility
+const JSON_DATA_PATH = '/backend/reflections.json'; // Adjusted path for better compatibility
 
 // Enhanced Storage Manager Class
 class JournalStorageManager {
