@@ -1,17 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Journal | Bijaya Gurung</title>
-  <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="manifest" href="{{ url_for('manifest') }}">
+
+  <meta name="theme-color" content="#FF6F00">
+
 </head>
 <body>
   <header></header>
 
   <main>
-    
+
     <section class="journal-entry">
       <button class="collapsible">Week 2 Journal Entry</button>
       <div class="content">
@@ -74,6 +77,43 @@
       </div>
     </section>
 
+    <section class="journal-entry">
+      <button class="collapsible">Week 6 Journal Entry</button>
+      <div class="content">
+        <p><strong>1. Why is the frontend-backend connection important?</strong><br>
+        The frontend-backend connection is the bridge between the user interface and the data logic. While my HTML and CSS provide the visual structure, they cannot permanently save data to the server on their own. The Flask backend acts as the logic layer, processing requests from the frontend to securely read and write data to the server. This connection turns my static website into a dynamic web application where data persists across different devices and sessions.</p>
+
+        <p><strong>2. Which HTTP methods did you use in Flask, and why?</strong><br>
+        I used two primary HTTP methods: <strong>GET</strong> and <strong>POST</strong>. I used the GET method to retrieve the current list of reflections from the reflections.json file so they can be displayed on the page. I used the POST method to send new journal entries from the client-side form to the server, where Flask appends them to the JSON file. This separation ensures that data retrieval and data modification are handled distinctively and securely.</p>
+
+        <p><strong>3. What is the difference between using Flask to store/load JSON data and reading JSON directly in the browser?</strong><br>
+        When reading JSON directly in the browser (client-side), the data is read-only or limited to LocalStorage, meaning changes aren't saved to the actual file on the server and are lost if the cache is cleared. By using Flask, the server has file-system access to physically write to reflections.json. This allows for true persistence—entries added by one user (or from one device) are saved permanently to the server and can be retrieved by any device accessing the PWA.</p>
+
+        <p><strong>4. Did you face any difficulties when running your project on PythonAnywhere? How did you handle them?</strong><br>
+        The biggest challenge was the directory structure. The lab instructions suggested using a specific backend folder, but the initial code examples pointed to the root directory, which caused "File Not Found" errors. I resolved this by modifying the Python path configuration to explicitly point to mysite/backend/reflections.json. I also had to update all my HTML link and script tags to use Flask's url_for() function, as standard relative paths do not work inside Flask templates.</p>
+
+        <p><strong>5. What extra feature did you build into your PWA with Flask, and why did you add it?</strong><br>
+        I integrated my <strong>Journal Management Dashboard</strong> (created in Lab 5) with the Flask backend. The dashboard now differentiates between "Browser/Local" entries and "Server/Flask" entries. I added this to provide a clear visual distinction of where data is coming from. It helps verify that the API connection is working—if the "Server" count increases, I know the backend logic is successful. It also gives the user confidence that their data is being safely archived on the server.</p>
+      </div>
+    </section>
+
+    <section class="journal-entry">
+      <button class="collapsible">Week 7 Journal Entry</button>
+      <div class="content">
+        <p><strong>1. Why is it useful to enhance your Flask app with PWA features?</strong><br>
+        Enhancing the app with PWA features makes it reliable and accessible regardless of network conditions. By adding a Web App Manifest, users can install the journal to their home screen, making it feel like a native application. The Service Worker ensures that the app loads instantly on repeat visits and remains functional even when the user is offline, significantly improving the user experience compared to a standard website.</p>
+
+        <p><strong>2. What did you use to support offline access and dynamic data?</strong><br>
+        I used a <strong>Service Worker</strong> (sw.js) to intercept network requests. I implemented a caching strategy where the app attempts to fetch data from the network first (to get the latest reflections) and falls back to the <strong>Cache Storage API</strong> if the network fails. This ensures that the shell of the application (HTML, CSS, JS) and previously visited pages are always available offline.</p>
+
+        <p><strong>3. What extra feature did you add, and why?</strong><br>
+        I added a <strong>Real-time Offline Status Notification</strong> system. By using the browser's navigator.onLine property and event listeners, the app detects network changes instantly. When the user loses connection, a red notification pops up saying "You are offline," and when connection is restored, a green "Back online" message appears. I added this to improve transparency—users need to know when they are working offline so they understand why new entries might not sync immediately.</p>
+
+        <p><strong>4. Did you face any challenges deploying your PWA, and how did you solve them?</strong><br>
+        The main challenge was the <strong>Service Worker Scope</strong>. Since my sw.js file is located in the static/js folder, it defaulted to only controlling files inside that folder. To fix this, I updated my flask_app.py to create a special route that serves the Service Worker from the root URL (/sw.js). This allowed the Service Worker to control the entire application, including the main HTML templates.</p>
+      </div>
+    </section>
+
     <!-- Lab 5: Python & JSON Backend Integration -->
     <section class="journal-management">
       <h2> Journal Statistics & Tools</h2>
@@ -95,7 +135,7 @@
           <p id="total-words">0</p>
         </div>
       </div>
-      
+
       <div class="tools-container">
         <div class="search-box">
           <input type="text" id="search-entries" placeholder=" Search entries...">
@@ -114,13 +154,13 @@
           <code class="terminal-command">python backend/save_entry.py</code>
           <p class="note">Entries added via Python will be available across all browsers and devices.</p>
         </div>
-        
+
         <div class="method-card">
           <h3>🌐 Browser Method</h3>
           <p>Use the form below for quick browser-only entries (LocalStorage):</p>
         </div>
       </div>
-      
+
       <form id="journal-form">
         <textarea id="journal-text" rows="6" placeholder="Write your reflection here (minimum 10 characters)..."></textarea>
         <div class="form-actions">
@@ -146,12 +186,12 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA | Lab 5 - Python & JSON Backend</p>
+    <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
   </footer>
 
-  <script src="js/script.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/browser.js"></script>
-  <script src="js/thirdparty.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/storage.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/browser.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/thirdparty.js') }}"></script>
 </body>
 </html>
