@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bijaya Gurung | Learning Journal</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+
+  <meta name="theme-color" content="#FF6F00">
+
 </head>
 <body>
   <header></header>
@@ -32,6 +36,6 @@
     <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
