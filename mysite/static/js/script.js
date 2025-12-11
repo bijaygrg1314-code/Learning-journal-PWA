@@ -9,10 +9,21 @@ const navHTML = `
 `;
 document.querySelector("header").innerHTML = navHTML;
 
-// Highlight active page
-const currentPage = window.location.pathname.split("/").pop();
+// Highlight active page (MODIFIED FOR FLASK ROUTES)
+const currentPath = window.location.pathname;
+
 document.querySelectorAll(".navbar a").forEach(link => {
-  if (link.getAttribute("href") === currentPage) link.classList.add("active");
+  const linkHref = link.getAttribute("href");
+
+  // 1. Check if the link's href matches the end of the current path
+  if (currentPath.endsWith(linkHref)) {
+    link.classList.add("active");
+  }
+
+  // 2. Special handling for the root route ('index.html' or '/')
+  if (linkHref === 'index.html' && (currentPath === '/' || currentPath === '/index.html')) {
+    link.classList.add("active");
+  }
 });
 
 // ===== Live Date/Time =====
@@ -52,3 +63,47 @@ document.querySelectorAll(".collapsible").forEach(btn => {
   });
 });
 
+// ===== Service Worker Registration (Lab 7) =====
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        // Registering /sw.js at the root scope (handled by flask_app.py route)
+        navigator.serviceWorker.register('/sw.js')
+            .then((reg) => console.log('Service Worker Registered!', reg.scope))
+            .catch((err) => console.log('Service Worker Failed:', err));
+    });
+}
+
+// ===== Lab 7 Extra Feature: Offline Status Notification =====
+function setupOfflineNotification() {
+  // 1. Create the HTML element dynamically
+  const notifyEl = document.createElement('div');
+  notifyEl.id = 'offline-notification';
+  document.body.appendChild(notifyEl);
+
+  // 2. Function to update the UI
+  function updateOnlineStatus() {
+    if (navigator.onLine) {
+      // Back Online
+      notifyEl.textContent = "You are back online! 🌐";
+      notifyEl.className = 'online';
+
+      // Hide the "Online" message after 3 seconds
+      setTimeout(() => {
+        notifyEl.style.display = 'none';
+        notifyEl.className = '';
+      }, 3000);
+    } else {
+      // Went Offline
+      notifyEl.textContent = "You are offline. Using cached mode. 📡";
+      notifyEl.className = 'offline';
+      notifyEl.style.display = 'block';
+    }
+  }
+
+  // 3. Add Event Listeners
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+}
+
+// Initialize the feature
+document.addEventListener('DOMContentLoaded', setupOfflineNotification);
