@@ -84,6 +84,7 @@ This project was built incrementally over 8 weeks of laboratory sessions:
     │   └── icon2.png   # PWA Icon (512x512)
     └── manifest.json   # Web App Manifest
 
+```
 
 ## 🛠 How to Run Locally
 
@@ -121,7 +122,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">
-  &copy; 2025 Bijaya Gurung | Learning Journal PWA
-</p>
+2026 Bijaya Gurung | Learning Journal PWA
+
 
