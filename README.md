@@ -122,6 +122,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-2026 Bijaya Gurung | Learning Journal PWA
+**Developed by Bijaya Gurung** as part of the Mobile Application Development Module.
+&copy; 2025 Learning Journal PWA
 
 
