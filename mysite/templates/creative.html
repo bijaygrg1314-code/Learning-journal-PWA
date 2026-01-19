@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Canvas | Bijaya Gurung</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+  <meta name="theme-color" content="#FF6F00">
+</head>
+<body>
+  <header></header>
+
+  <main>
+    <section class="intro-card">
+      <h2>🎨 Creative Canvas</h2>
+      <p>Sometimes words aren't enough. Sketch your ideas, diagrams, or feelings here.</p>
+    </section>
+
+    <section class="canvas-section">
+      <div class="canvas-toolbar">
+        <div class="tool-group">
+          <label for="stroke-color">Color:</label>
+          <input type="color" id="stroke-color" value="#000000">
+        </div>
+
+        <div class="tool-group">
+          <label for="line-width">Size:</label>
+          <input type="range" id="line-width" min="1" max="20" value="3">
+        </div>
+
+        <div class="tool-group actions">
+          <button id="clear-canvas" class="btn-tool delete-btn">Clear</button>
+          <button id="download-canvas" class="btn-tool copy-btn">Download</button>
+        </div>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="drawing-board"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
+</body>
+</html>
