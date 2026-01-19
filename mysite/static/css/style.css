@@ -543,6 +543,46 @@ body.dark-mode #theme-toggle { background-color: #333; color: #FAFAFA; }
   animation: slideUp 0.3s ease-out;
 }
 
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    flex-wrap: nowrap;           /* Stop items from stacking on top of each other */
+    overflow-x: auto;            /* Allow scrolling left/right */
+    justify-content: flex-start; /* Start from the left, don't center */
+    padding: 1rem 0.5rem;        /* Smaller padding */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll on iPhone */
+  }
+  
+  /* OPTIONAL: Hide the scrollbar so it looks cleaner */
+  .navbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 2. Fix Page Widths (Prevents content touching edges) */
+  .intro-card, 
+  .project-card, 
+  .journal-entry, 
+  .canvas-section,
+  .about {
+    margin: 1rem;                /* Shrink margins from 2rem to 1rem */
+    width: auto;                 /* Let the width adjust automatically */
+    max-width: 100%;             /* Stop it from being wider than screen */
+  }
+
+  /* 3. Stack the Canvas Tools (So buttons are easy to tap) */
+  .canvas-toolbar {
+    flex-direction: column;      /* Stack items vertically */
+    gap: 1rem;
+  }
+  
+  .tool-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+
+
 @keyframes slideUp {
   from { bottom: -50px; opacity: 0; }
   to { bottom: 20px; opacity: 1; }
