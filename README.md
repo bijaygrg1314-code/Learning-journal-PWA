@@ -116,12 +116,6 @@ To run this project on your own machine, follow these steps:
 
 ---
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
 **Developed by Bijaya Gurung** as part of the Mobile Application Development Module.
 &copy; 2025 Learning Journal PWA
 
