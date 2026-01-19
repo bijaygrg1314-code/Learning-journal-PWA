@@ -656,4 +656,101 @@ body.dark-mode .canvas-toolbar {
   background-color: #333;
   color: white;
 }
+/*  DESKTOP HOMEPAGE UPGRADE */
+
+/* 1. New Feature Grid (3 Columns) */
+.features-section {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to 1 column (Mobile) */
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: -2rem auto 2rem auto; /* Pull it up slightly to overlap hero */
+  padding: 0 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  border-bottom: 4px solid #FF6F00; /* Orange accent */
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 2. Desktop Specific Layouts */
+@media (min-width: 768px) {
+  
+  /* Make Hero a Row (Left: Text, Right: Image) */
+  .desktop-hero {
+    display: flex;
+    align-items: center; /* Vertically center */
+    justify-content: space-between; /* Push apart */
+    text-align: left; /* Reset text alignment */
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 0 0 30px 30px;
+  }
+
+  .hero-content {
+    flex: 1; /* Take up half space */
+    padding-right: 2rem;
+  }
+
+  .hero h1 {
+    font-size: 3rem; /* Bigger title on desktop */
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+
+  .cta-buttons {
+    justify-content: flex-start; /* Align buttons to left */
+  }
+
+  /* Image Styling */
+  .hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-visual img {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: float 6s ease-in-out infinite; /* Floating animation */
+  }
+
+  /* Switch Features to 3 Columns */
+  .features-section {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: -3rem; /* Overlap effect */
+  }
+}
+
+/* 3. Floating Animation for Image */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Dark Mode Support for New Elements */
+body.dark-mode .feature-card {
+  background-color: #424242;
+  color: #fff;
+}
 
