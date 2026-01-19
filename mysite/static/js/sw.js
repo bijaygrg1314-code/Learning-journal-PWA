@@ -1,20 +1,23 @@
-const CACHE_NAME = 'journal-v1';
+const CACHE_NAME = 'journal-v2'; // Increment version to force update
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/journal.html',
     '/projects.html',
     '/about.html',
+    '/creative.html',           // <--- ADD THIS
     '/static/css/style.css',
     '/static/js/script.js',
     '/static/js/storage.js',
     '/static/js/browser.js',
     '/static/js/thirdparty.js',
+    '/static/js/canvas.js',     // <--- ADD THIS
     '/static/manifest.json',
     '/static/images/profile.jpg',
     '/static/images/icon1.png',
     '/static/images/icon2.png'
 ];
+
 
 // 1. Install Event: Cache static assets
 self.addEventListener('install', (event) => {
