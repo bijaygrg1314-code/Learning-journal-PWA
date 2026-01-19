@@ -14,23 +14,47 @@
 <body>
   <header></header>
 
-  <main>
-    <section class="hero">
-      <h1>Hi, I'm Bijaya Gurung 👋</h1>
-      <p>Welcome to my Learning Journal PWA — documenting my journey in Mobile Application Development.</p>
-      <p id="date-time"></p>
+    <main>
+    <section class="hero desktop-hero">
+      <div class="hero-content">
+        <h1>Hi, I'm Bijaya Gurung 👋</h1>
+        <p class="hero-subtitle">Welcome to my Learning Journal PWA — documenting my journey in Mobile Application Development.</p>
+        <p id="date-time" class="live-clock"></p>
 
-      <div class="cta-buttons">
-        <a href="journal.html" class="btn">📖 View Journal</a>
-        <a href="projects.html" class="btn">💻 Explore Projects</a>
+        <div class="cta-buttons">
+          <a href="journal.html" class="btn btn-primary">📖 View Journal</a>
+          <a href="projects.html" class="btn btn-outline">💻 Explore Projects</a>
+        </div>
+      </div>
+      
+      <div class="hero-visual">
+        <img src="{{ url_for('static', filename='images/profile.jpg') }}" alt="Bijaya Coding">
       </div>
     </section>
 
-    <section class="intro-card">
+    <section class="features-section">
+      <div class="feature-card">
+        <h3>🚀 Progressive Web App</h3>
+        <p>Installable on any device with full offline capabilities powered by Service Workers.</p>
+      </div>
+      
+      <div class="feature-card">
+        <h3>🐍 Flask Backend</h3>
+        <p>Dynamic content serving with a robust Python backend and JSON persistence.</p>
+      </div>
+
+      <div class="feature-card">
+        <h3>🎨 Creative Canvas</h3>
+        <p>New interactive drawing tool built with the HTML5 Canvas API.</p>
+      </div>
+    </section>
+
+    <section class="intro-card wide-card">
       <h2>What’s this site about?</h2>
       <p>This is my personal space to share weekly reflections, showcase projects, and track my growth as a developer.</p>
     </section>
-  </main>
+    </main>
+  
 
   <footer>
     <p>&copy; 2025 Bijaya Gurung | Learning Journal PWA</p>
