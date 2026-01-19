@@ -50,6 +50,10 @@ def journal_page():
 def projects_page():
     return render_template("projects.html")
 
+@app.route("/creative.html")
+def creative_page():
+    return render_template("creative.html")
+
 @app.route("/about.html")
 def about_page():
     return render_template("about.html")
@@ -97,3 +101,4 @@ def service_worker():
 # This block is only for local testing; PythonAnywhere uses the WSGI file.
 if __name__ == '__main__':
     app.run(debug=True)
+    
