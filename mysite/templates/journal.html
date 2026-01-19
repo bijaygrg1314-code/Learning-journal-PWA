@@ -15,6 +15,27 @@
 
   <main>
 
+        <section class="journal-entry">
+      <button class="collapsible">Week 1 Journal Entry</button>
+      <div class="content">
+        <p><strong>1. How did you start your mobile development journey this week?</strong><br>
+        My journey began with setting up a robust development environment. I created a GitHub repository named "TemperatureConverterPWA" and integrated it directly with VS Code using the GitHub Repositories extension. This allowed me to commit and push changes seamlessly. I then developed the core Progressive Web App (PWA) files—index.html, manifest.json, and the conversion logic in JavaScript—to handle temperature conversion between Celsius, Fahrenheit, and Kelvin.</p>
+
+        <p><strong>2. What were the main technical challenges you faced?</strong><br>
+        The most significant hurdle was configuring the Service Worker (sw.js). I struggled with file path resolution, specifically the difference between absolute and relative paths, which caused the caching to fail initially. Debugging this taught me how browsers resolve assets. Additionally, when I moved to Android Studio to build the native version using Kotlin, I faced severe performance issues with the emulator. To overcome this, I optimized my workflow by debugging directly on a physical Android device.</p>
+
+        <p><strong>3. What did you learn about deployment and hosting?</strong><br>
+        I deployed the app to two different platforms to understand their differences. First, I used GitHub Pages for static hosting, and then I deployed to PythonAnywhere. Configuring the WSGI file on PythonAnywhere to serve static HTML files was a key learning moment, highlighting the differences between simple static hosting and server-side configurations.</p>
+
+        <p><strong>4. Project Links:</strong><br>
+        <ul>
+          <li>🔗 <strong>GitHub Repo:</strong> <a href="https://github.com/bijaygrg1314-code/TemperatureConverterPWA-" target="_blank">TemperatureConverterPWA</a></li>
+          <li>🌐 <strong>Live Demo (PythonAnywhere):</strong> <a href="https://bijayagurung1.pythonanywhere.com/" target="_blank">View App</a></li>
+        </ul>
+        </p>
+      </div>
+        </section>
+    
     <section class="journal-entry">
       <button class="collapsible">Week 2 Journal Entry</button>
       <div class="content">
@@ -113,7 +134,27 @@
         The main challenge was the <strong>Service Worker Scope</strong>. Since my sw.js file is located in the static/js folder, it defaulted to only controlling files inside that folder. To fix this, I updated my flask_app.py to create a special route that serves the Service Worker from the root URL (/sw.js). This allowed the Service Worker to control the entire application, including the main HTML templates.</p>
       </div>
     </section>
+        <section class="journal-entry">
+      <button class="collapsible">Week 8 Mini Project: Creative Canvas</button>
+      <div class="content">
+        <p><strong>1. What additional features did you add to your Learning Journal?</strong><br>
+        For my mini-project, I implemented a "Creative Canvas" page, transforming the Learning Journal from a purely text-based application into a multimedia creative tool. This feature utilizes the HTML5 Canvas API to provide a fully interactive drawing interface directly within the browser. I built a custom toolbar that allows users to select any color from the RGB spectrum and adjust their brush size using a range slider, giving them control over their artistic expression. A key addition was the "Download" functionality, which converts the canvas data into a PNG file instantly, allowing users to save their diagrams or sketches locally to their device.</p>
+        <p>To ensure this feature aligned with the PWA standards of the project, I fully integrated it into the app's offline capabilities. I updated the <code>sw.js</code> Service Worker to cache the new HTML and JavaScript files, ensuring the drawing board functions flawlessly even without an internet connection. I also updated the navigation bar to include a direct link to the canvas and added responsive CSS to ensure the drawing area scales correctly on both desktop monitors and mobile screens.</p>
 
+        <p><strong>2. Why did you choose your mini project idea?</strong><br>
+        I chose the Creative Canvas because I believe a true learning journal should accommodate different learning styles, specifically visual learning. In the field of Mobile Application Development, concepts like UI layouts, data flow, and architecture often need to be visualized to be fully understood. A simple text entry cannot always capture the logic of a flowchart or the design of a wireframe. By integrating a drawing tool, I wanted to emulate the experience of a physical engineering notebook where a developer might sketch out ideas in the margins.</p>
+        <p>Furthermore, this choice allowed me to explore the HTML5 Canvas API, a powerful browser technology that I had not used extensively in previous labs. It was also a strategic choice for a Progressive Web App; touch-based drawing feels incredibly native and intuitive on mobile devices. It showcases the "app-like" capabilities of the PWA architecture much better than a simple form or calculator would, proving that web technologies can deliver rich, interactive experiences similar to native Android applications.</p>
+
+        <p><strong>3. What technical challenges did you face and how did you solve them?</strong><br>
+        The most significant technical challenge was handling cross-device input compatibility. The HTML5 Canvas API listens for mouse events (<code>mousedown</code>, <code>mousemove</code>) by default, which works perfectly on desktop computers but fails completely on mobile devices that rely on touch events. When I first tested the feature on my phone, the canvas did not respond to my finger. To solve this, I wrote a dual-event handling system in JavaScript. I added specific listeners for <code>touchstart</code> and <code>touchmove</code> events and mapped the touch coordinates—which the browser returns differently than mouse coordinates—to the canvas context.</p>
+        <p>Another major issue was "ghost scrolling." When I tried to draw a vertical line on my mobile screen, the browser interpreted the gesture as a command to scroll the page down, moving the entire UI instead of drawing a line. I resolved this by adding <code>e.preventDefault()</code> inside the touch event listeners. This command effectively locks the page scrolling only while the user is actively interacting with the canvas, ensuring a smooth and frustration-free drawing experience.</p>
+
+        <p><strong>4. What would you improve if given more time?</strong><br>
+        If I had more time, the first feature I would implement is a "Save to Server" function integrated with the Flask backend. Currently, users can download their drawings to their local device, but they cannot save them permanently to the shared JSON journal on the server. I would create a new API endpoint to accept base64 image strings and store them in the backend, allowing sketches to be displayed alongside written text entries in the main journal feed. This would create a truly unified multimedia entry system.</p>
+        <p>Additionally, I would significantly enhance the drawing tools to improve usability. Implementing an "Undo/Redo" stack is crucial for a drawing app, as currently, a single mistake requires the user to clear the entire board. I would also add an "Eraser" tool and different brush textures to make the canvas feel more artistic. Finally, I would improve the CSS to support a "Night Mode" specific palette, ensuring that drawings made on a dark background look just as good if the user toggles the theme back to light mode.</p>
+      </div>
+        </section>
+    
     <!-- Lab 5: Python & JSON Backend Integration -->
     <section class="journal-management">
       <h2> Journal Statistics & Tools</h2>
