@@ -599,3 +599,54 @@ body.dark-mode #theme-toggle { background-color: #333; color: #FAFAFA; }
   display: block;
   background-color: #388E3C;
 }
+/* ===== Creative Canvas ===== */
+.canvas-section {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: #FFF3E0;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.canvas-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.canvas-container {
+  width: 100%;
+  border: 2px dashed #FF6F00; /* Dashed orange border looks like a sketchbook */
+  border-radius: 4px;
+  background-color: white;
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+canvas {
+  display: block; /* Removes bottom spacing */
+  width: 100%;
+}
+
+/* Dark Mode Support for Canvas */
+body.dark-mode .canvas-section {
+  background-color: #424242;
+}
+body.dark-mode .canvas-toolbar {
+  background-color: #333;
+  color: white;
+}
+
